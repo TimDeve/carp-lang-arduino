@@ -1,0 +1,5 @@
+(local-include "serial.h")
+
+(defmodule Serial
+  (register init (Fn [Long] ()) "SerialInit")
+  (register println (Fn [&String] ()) "SerialPrintln")) 

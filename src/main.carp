@@ -1,0 +1,8 @@
+(load "serial.carp")
+
+(defn setup []
+  (do
+    (Serial.init 74880l)
+    (Serial.println "Hello Carp!")))
+
+(defn loop [] ())
