@@ -2,4 +2,4 @@
 
 (defmodule Serial
   (register init (Fn [Long] ()) "SerialInit")
-  (register println (Fn [&String] ()) "SerialPrintln")) 
+  (register println (Fn [&String] ()) "SerialPrintln"))
