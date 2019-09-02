@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := build
+
 build_carp:
 	cd src && carp -b --generate-only main.carp
 

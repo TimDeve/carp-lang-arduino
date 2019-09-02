@@ -1,8 +1,15 @@
 (load "serial.carp")
 
+(use Array)
+
+(defn hello-carp [a] (String.concat &[(str a), @". " @"Hello Carp!"]))
+
 (defn setup []
-  (do
-    (Serial.init 74880l)
-    (Serial.println "Hello Carp!")))
+  (let [numbers (range 1 9 1)
+        hellos (copy-map &hello-carp &numbers)]
+   (do
+     (Serial.init 74880l)
+     (foreach [hello &hellos]
+        (Serial.println hello)))))
 
 (defn loop [] ())
