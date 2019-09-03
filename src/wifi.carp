@@ -1,0 +1,7 @@
+(local-include "wifi.h")
+
+(defmodule Wifi
+  (register set-mode (Fn [Int] ()) "WifiSetMode")
+  (register scan-network (Fn [] Int) "WifiScanNetwork")
+  (register get-ssid (Fn [Int] String) "WifiGetSSID")
+  (register disconnect (Fn [] ()) "WifiDisconnect"))

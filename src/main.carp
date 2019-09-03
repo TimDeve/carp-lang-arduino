@@ -1,8 +1,9 @@
 (load "serial.carp")
+(load "wifi.carp")
 
 (use Array)
 
-(defn times-three [x] (* 3 x)) 
+(defn times-three [x] (* 3 x))
 
 (defn divisible-by-two? [x] (= (mod @x 2) 0))
 
@@ -16,6 +17,8 @@
 (defn setup []
    (do
      (Serial.init 74880l)
+     (Wifi.set-mode 1)
+     (Wifi.disconnect)
      (==> (range 1 9 1)
           (endo-map &times-three)
           (endo-filter &divisible-by-two?)
@@ -24,4 +27,7 @@
           (ref)
           (println-strings!))))
 
-(defn loop [] ())
+(defn loop []
+   (let [numberOfNetwork (Wifi.scan-network)]
+     (Serial.println &(Wifi.get-ssid 0))))
+
