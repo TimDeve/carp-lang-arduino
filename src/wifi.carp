@@ -1,4 +1,4 @@
-(local-include "wifi.h")
+(relative-include "wifi.h")
 
 (defmodule Wifi
   (register set-mode (Fn [Int] ()) "WifiSetMode")

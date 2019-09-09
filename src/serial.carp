@@ -1,4 +1,4 @@
-(local-include "serial.h")
+(relative-include "serial.h")
 
 (defmodule Serial
   (register init (Fn [Long] ()) "SerialInit")
