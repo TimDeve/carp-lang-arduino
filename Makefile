@@ -4,7 +4,7 @@ build_carp:
 	carp -b main.carp
 
 clean_carp:
-	rm -rf src/out
+	rm -f src/main.c
 
 build_platform:
 	platformio run --target debug
