@@ -1,7 +1,17 @@
 (relative-include "wifi.h")
 
 (defmodule Wifi
-  (register set-mode (Fn [Int] ()) "WifiSetMode")
+  (register set-mode-c (Fn [Int] ()) "WifiSetMode")
   (register scan-network (Fn [] Int) "WifiScanNetwork")
   (register get-ssid (Fn [Int] String) "WifiGetSSID")
-  (register disconnect (Fn [] ()) "WifiDisconnect"))
+  (register disconnect (Fn [] ()) "WifiDisconnect")
+
+  (deftype WifiMode Off Station Ap ApStation)
+
+  (defn set-mode [mode]
+    (set-mode-c (match (the WifiMode mode)
+      WifiMode.Off 0
+      WifiMode.Station 1
+      WifiMode.Ap 2
+      WifiMode.ApStation 3))))
+

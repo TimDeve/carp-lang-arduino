@@ -19,7 +19,7 @@
 (defn setup []
   (do
    (Serial.init 74880l)
-   (Wifi.set-mode 1)
+   (Wifi.set-mode (Wifi.WifiMode.Station))
    (Wifi.disconnect)
    (==> (range 1 9 1)
         (endo-map &times-three)
