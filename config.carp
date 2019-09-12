@@ -1,0 +1,3 @@
+(Project.config "title" "Arduino")
+(Project.config "output-directory" "src")
+(Project.config "generate-only" true)

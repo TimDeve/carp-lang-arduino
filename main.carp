@@ -1,5 +1,7 @@
-(load "serial.carp")
-(load "wifi.carp")
+(load "config.carp")
+
+(load "src/serial.carp")
+(load "src/wifi.carp")
 
 (use Array)
 
