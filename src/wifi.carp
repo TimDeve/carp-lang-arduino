@@ -1,7 +1,11 @@
 (relative-include "wifi.h")
 
 (defmodule Wifi
+  ; Don't use these
   (register set-mode-c (Fn [Int] ()) "WifiSetMode")
+  (register begin-c (Fn [(Ptr String) (Ptr String)] Int) "WifiBegin")
+  ; end don't use these
+
   (register scan-network (Fn [] Int) "WifiScanNetwork")
   (register get-ssid (Fn [Int] String) "WifiGetSSID")
   (register disconnect (Fn [] ()) "WifiDisconnect")
@@ -13,5 +17,28 @@
       WifiMode.Off 0
       WifiMode.Station 1
       WifiMode.Ap 2
-      WifiMode.ApStation 3))))
+      WifiMode.ApStation 3)))
+
+  (deftype WifiStatus
+    NoShield
+    IdleStatus
+    NoSsidAvailable
+    ScanCompleted
+    Connected
+    ConnectionFailed
+    ConnectionLost
+    Disconnected
+    Unknown)
+
+  (defn begin [ssid pass]
+    (case (begin-c ssid pass)
+      255 (WifiStatus.NoShield)
+      0   (WifiStatus.IdleStatus)
+      1   (WifiStatus.NoSsidAvailable)
+      2   (WifiStatus.ScanCompleted)
+      3   (WifiStatus.Connected)
+      4   (WifiStatus.ConnectionFailed)
+      5   (WifiStatus.ConnectionLost)
+      6   (WifiStatus.Disconnected)
+          (WifiStatus.Unknown))))
 

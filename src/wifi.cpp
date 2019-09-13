@@ -22,3 +22,8 @@ char *WifiGetSSID(int networkIndex)
   String ssid = WiFi.SSID(networkIndex);
   return strdup(ssid.c_str());
 }
+
+int WifiBegin(char **ssid, char **pass)
+{
+  return (int)WiFi.begin(*ssid, *pass);
+}
