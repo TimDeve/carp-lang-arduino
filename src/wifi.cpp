@@ -27,3 +27,7 @@ int WifiBegin(char **ssid, char **pass)
 {
   return (int)WiFi.begin(*ssid, *pass);
 }
+
+int WifiGetStatus() {
+  return (int)WiFi.status();
+}

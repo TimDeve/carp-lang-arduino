@@ -4,6 +4,7 @@
   ; Don't use these
   (register set-mode-c (Fn [Int] ()) "WifiSetMode")
   (register begin-c (Fn [(Ptr String) (Ptr String)] Int) "WifiBegin")
+  (register get-status-c (Fn [] Int) "WifiGetStatus")
   ; end don't use these
 
   (register scan-network (Fn [] Int) "WifiScanNetwork")
@@ -30,15 +31,21 @@
     Disconnected
     Unknown)
 
+  (defn match-int-to-wifi-status [int]
+    (case (the Int int)
+        255 (WifiStatus.NoShield)
+        0   (WifiStatus.IdleStatus)
+        1   (WifiStatus.NoSsidAvailable)
+        2   (WifiStatus.ScanCompleted)
+        3   (WifiStatus.Connected)
+        4   (WifiStatus.ConnectionFailed)
+        5   (WifiStatus.ConnectionLost)
+        6   (WifiStatus.Disconnected)
+            (WifiStatus.Unknown)))
+
   (defn begin [ssid pass]
-    (case (begin-c ssid pass)
-      255 (WifiStatus.NoShield)
-      0   (WifiStatus.IdleStatus)
-      1   (WifiStatus.NoSsidAvailable)
-      2   (WifiStatus.ScanCompleted)
-      3   (WifiStatus.Connected)
-      4   (WifiStatus.ConnectionFailed)
-      5   (WifiStatus.ConnectionLost)
-      6   (WifiStatus.Disconnected)
-          (WifiStatus.Unknown))))
+    (match-int-to-wifi-status (begin-c ssid pass)))
+
+  (defn get-status []
+    (match-int-to-wifi-status (get-status-c))))
 

@@ -8,6 +8,7 @@ extern "C"
   int WifiScanNetwork();
   char *WifiGetSSID(int networkIndex);
   int WifiBegin(char **ssid, char **pass);
+  int WifiGetStatus();
 
 #ifdef __cplusplus /* If this is a C++ compiler, end C linkage */
 }
