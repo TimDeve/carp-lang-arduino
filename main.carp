@@ -16,6 +16,13 @@
   (foreach [str strings]
     (Serial.println str)))
 
+(defn print-scanned-ssids []
+  (let [numberOfNetwork (Wifi.scan-network)]
+    (do
+     (Serial.println "--------------")
+     (for [networkIndex 0 numberOfNetwork]
+       (Serial.println &(Wifi.get-ssid networkIndex))))))
+
 (defn setup []
   (do
    (Serial.init 74880l)
@@ -30,8 +37,4 @@
         (println-strings!))))
 
 (defn loop []
-  (let [numberOfNetwork (Wifi.scan-network)]
-    (do
-     (Serial.println "--------------")
-     (for [networkIndex 0 numberOfNetwork]
-       (Serial.println &(Wifi.get-ssid networkIndex))))))
+  (print-scanned-ssids))
