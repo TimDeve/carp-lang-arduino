@@ -1,11 +1,14 @@
 (relative-include "wifi.h")
 
 (defmodule Wifi
-  ; Don't use these
+  (private set-mode-c)
   (register set-mode-c (Fn [Int] ()) "WifiSetMode")
+
+  (private begin-c)
   (register begin-c (Fn [(Ptr String) (Ptr String)] Int) "WifiBegin")
+
+  (private get-status-c)
   (register get-status-c (Fn [] Int) "WifiGetStatus")
-  ; end don't use these
 
   (register scan-network (Fn [] Int) "WifiScanNetwork")
   (register get-ssid (Fn [Int] String) "WifiGetSSID")
@@ -31,6 +34,7 @@
     Disconnected
     Unknown)
 
+  (private match-int-to-wifi-status)
   (defn match-int-to-wifi-status [int]
     (case (the Int int)
         255 (WifiStatus.NoShield)
