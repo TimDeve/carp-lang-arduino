@@ -12,6 +12,7 @@
 
   (register scan-network (Fn [] Int) "WifiScanNetwork")
   (register get-ssid (Fn [Int] String) "WifiGetSSID")
+  (register get-local-ip (Fn [] String) "WifiGetLocalIP")
   (register disconnect (Fn [] ()) "WifiDisconnect")
 
   (deftype WifiMode Off Station Ap ApStation)

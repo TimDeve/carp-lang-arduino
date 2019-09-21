@@ -28,6 +28,13 @@ int WifiBegin(char *ssid, char *pass)
   return (int)WiFi.begin(ssid, pass);
 }
 
-int WifiGetStatus() {
+int WifiGetStatus()
+{
   return (int)WiFi.status();
+}
+
+char *WifiGetLocalIP()
+{
+  String ssid = WiFi.localIP().toString();
+  return strdup(ssid.c_str());
 }

@@ -21,15 +21,16 @@
    (Wifi.disconnect)
    (Wifi.set-mode (Wifi.WifiMode.Station))
    (print-scanned-ssids)
-   (Wifi.disconnect)
    (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass))))
 
 (defn loop []
   (do
    (Sys.delay 1000)
-   (Serial.println (match (Wifi.get-status)
-                     Connected "Connected"
-                     _         &(String.append
+   (Serial.println &(match (Wifi.get-status)
+                     Connected (String.append
+                                 "Connected, ip = "
+                                 &(Wifi.get-local-ip))
+                     _         (String.append
                                  "Connecting to: "
                                  &(Secrets.wifi-ssid))))))
 
