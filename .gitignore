@@ -1,2 +1,3 @@
 .pio
 src/main.c
+secrets.carp

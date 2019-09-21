@@ -1,0 +1,2 @@
+(defmodule Sys
+  (register delay (Fn [Int] ()) "delay"))

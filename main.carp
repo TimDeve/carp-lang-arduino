@@ -1,40 +1,35 @@
 (load "config.carp")
+(load "secrets.carp")
 
 (load "src/serial.carp")
 (load "src/wifi.carp")
+(load "src/sys.carp")
 
 (use Array)
-
-(defn times-three [x] (* 3 x))
-
-(defn divisible-by-two? [x] (= (mod @x 2) 0))
-
-(defn concat-with-hello-carp [a]
-  (String.concat &[(str a), @". " @"Hello Carp!"]))
-
-(defn println-strings! [strings]
-  (foreach [str strings]
-    (Serial.println str)))
+(use Wifi.WifiStatus)
 
 (defn print-scanned-ssids []
   (let [numberOfNetwork (Wifi.scan-network)]
     (do
-     (Serial.println "--------------")
      (for [networkIndex 0 numberOfNetwork]
-       (Serial.println &(Wifi.get-ssid networkIndex))))))
+       (Serial.println &(Wifi.get-ssid networkIndex)))
+       (Serial.println "--------------"))))
 
 (defn setup []
   (do
    (Serial.init 74880l)
-   (Wifi.set-mode (Wifi.WifiMode.Station))
    (Wifi.disconnect)
-   (==> (range 1 9 1)
-        (endo-map &times-three)
-        (endo-filter &divisible-by-two?)
-        (ref)
-        (copy-map &concat-with-hello-carp)
-        (ref)
-        (println-strings!))))
+   (Wifi.set-mode (Wifi.WifiMode.Station))
+   (print-scanned-ssids)
+   (Wifi.disconnect)
+   (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass))))
 
 (defn loop []
-  (print-scanned-ssids))
+  (do
+   (Sys.delay 1000)
+   (Serial.println (match (Wifi.get-status)
+                     Connected "Connected"
+                     _         &(String.append
+                                 "Connecting to: "
+                                 &(Secrets.wifi-ssid))))))
+

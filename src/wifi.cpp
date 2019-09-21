@@ -23,9 +23,9 @@ char *WifiGetSSID(int networkIndex)
   return strdup(ssid.c_str());
 }
 
-int WifiBegin(char **ssid, char **pass)
+int WifiBegin(char *ssid, char *pass)
 {
-  return (int)WiFi.begin(*ssid, *pass);
+  return (int)WiFi.begin(ssid, pass);
 }
 
 int WifiGetStatus() {

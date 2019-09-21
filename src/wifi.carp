@@ -5,7 +5,7 @@
   (register set-mode-c (Fn [Int] ()) "WifiSetMode")
 
   (private begin-c)
-  (register begin-c (Fn [(Ptr String) (Ptr String)] Int) "WifiBegin")
+  (register begin-c (Fn [(Ptr Char) (Ptr Char)] Int) "WifiBegin")
 
   (private get-status-c)
   (register get-status-c (Fn [] Int) "WifiGetStatus")
@@ -48,7 +48,7 @@
             (WifiStatus.Unknown)))
 
   (defn begin [ssid pass]
-    (match-int-to-wifi-status (begin-c ssid pass)))
+    (match-int-to-wifi-status (begin-c (cstr ssid) (cstr pass))))
 
   (defn get-status []
     (match-int-to-wifi-status (get-status-c))))
