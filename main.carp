@@ -1,3 +1,5 @@
+(system-include "Arduino.h")
+
 (load "config.carp")
 (load "secrets.carp")
 
@@ -15,14 +17,18 @@
        (Serial.println &(Wifi.get-ssid networkIndex)))
        (Serial.println "--------------"))))
 
+
+(sig setup (Fn [] ()))
 (defn setup []
   (do
    (Serial.init 74880l)
    (Wifi.disconnect)
    (Wifi.set-mode (Wifi.WifiMode.Station))
    (print-scanned-ssids)
-   (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass))))
+   ; Awkard let to discard result of Wifi.begin
+   (let [_ (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass))] ())))
 
+(sig loop (Fn [] ()))
 (defn loop []
   (do
    (Sys.delay 1000)
