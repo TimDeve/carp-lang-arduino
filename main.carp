@@ -6,6 +6,7 @@
 (load "src/serial.carp")
 (load "src/wifi.carp")
 (load "src/sys.carp")
+(load "src/void.carp")
 
 (use Array)
 (use Wifi.WifiStatus)
@@ -25,8 +26,7 @@
    (Wifi.disconnect)
    (Wifi.set-mode (Wifi.WifiMode.Station))
    (print-scanned-ssids)
-   ; Awkard let to discard result of Wifi.begin
-   (let [_ (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass))] ())))
+   (void (Wifi.begin &(Secrets.wifi-ssid) &(Secrets.wifi-pass)))))
 
 (sig loop (Fn [] ()))
 (defn loop []

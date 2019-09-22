@@ -1,0 +1,3 @@
+(defmacro void [form]
+  (list 'let ['_ form] ()))
+
