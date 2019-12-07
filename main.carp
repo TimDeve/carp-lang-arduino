@@ -16,7 +16,7 @@
     (do
      (for [networkIndex 0 numberOfNetwork]
        (Serial.println &(Wifi.get-ssid networkIndex)))
-       (Serial.println "--------------"))))
+     (Serial.println "--------------"))))
 
 
 (sig setup (Fn [] ()))

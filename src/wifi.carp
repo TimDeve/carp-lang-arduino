@@ -19,10 +19,10 @@
 
   (defn set-mode [mode]
     (set-mode-c (match (the WifiMode mode)
-      WifiMode.Off 0
-      WifiMode.Station 1
-      WifiMode.Ap 2
-      WifiMode.ApStation 3)))
+                  WifiMode.Off 0
+                  WifiMode.Station 1
+                  WifiMode.Ap 2
+                  WifiMode.ApStation 3)))
 
   (deftype WifiStatus
     NoShield
