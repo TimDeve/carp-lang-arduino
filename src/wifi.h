@@ -10,6 +10,8 @@ extern "C"
   int WifiBegin(char *ssid, char *pass);
   int WifiGetStatus();
   char *WifiGetLocalIP();
+  void ServerBegin();
+  void ServerServe(char *response);
 
 #ifdef __cplusplus /* If this is a C++ compiler, end C linkage */
 }

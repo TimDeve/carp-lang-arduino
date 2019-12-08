@@ -1,10 +1,13 @@
 (system-include "Arduino.h")
 
+(load "git@github.com:TimDeve/hoquet@master")
+
 (load "config.carp")
 (load "secrets.carp")
 
 (load "src/serial.carp")
 (load "src/wifi.carp")
+(load "src/server.carp")
 (load "src/sys.carp")
 (load "src/void.carp")
 
@@ -18,6 +21,14 @@
        (Serial.println &(Wifi.get-ssid networkIndex)))
      (Serial.println "--------------"))))
 
+(defn generate-html-hello []
+  (with Hoquet
+    (h "html"
+       {}
+       [(h "body"
+           {}
+           [(h "h1" {} [@"Hello from esp8266"])
+            (h "p" {} [@"Welcome to embedded Carp."])])])))
 
 (sig setup (Fn [] ()))
 (defn setup []
@@ -31,12 +42,15 @@
 (sig loop (Fn [] ()))
 (defn loop []
   (do
-   (Sys.delay 1000)
-   (Serial.println &(match (Wifi.get-status)
-                     Connected (String.append
-                                 "Connected, ip = "
-                                 &(Wifi.get-local-ip))
-                     _         (String.append
-                                 "Connecting to: "
-                                 &(Secrets.wifi-ssid))))))
+   (match (Wifi.get-status)
+     Connected (do
+                  (Serial.println &(String.append
+                                     "Connected, ip = "
+                                     &(Wifi.get-local-ip)))
+                  (Server.serve &(generate-html-hello)))
+     _         (do
+                  (Serial.println &(String.append
+                                     "Connecting to: "
+                                     &(Secrets.wifi-ssid)))
+                  (Sys.delay 1000)))))
 

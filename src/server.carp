@@ -1,0 +1,25 @@
+(load "sys.carp")
+
+(defmodule Server
+  (register begin (Fn [] ()) "ServerBegin")
+
+  (private serve-c)
+  (register serve-c (Fn [(Ptr Char)] ()) "ServerServe")
+
+
+  (private generate-http-response)
+  (defn generate-http-response [response-body]
+    (let [content-length (length response-body)]
+      (concat &[@"HTTP/1.1 200 OK\r\nServer: carp on esp8266\r\nContent-Type: text/html\r\nContent-Length: "
+                (str content-length)
+                @"\r\nConnection: close\r\n\r\n"
+                @response-body])))
+
+  (defn serve [response-body]
+    (do
+      (begin)
+      (while true
+        (do
+          (serve-c (cstr &(generate-http-response response-body)))
+          (Sys.delay 10))))))
+
