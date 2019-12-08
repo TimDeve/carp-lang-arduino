@@ -8,7 +8,7 @@
 (defn setup []
   (do
    (Serial.init 74880l)
-   (let [a-map (Map.create)]
+   (let [a-map {1 2}]
      (Serial.println "test"))))
 
 (sig loop (Fn [] ()))
