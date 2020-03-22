@@ -1,6 +1,6 @@
 (system-include "Arduino.h")
 
-(load "git@github.com:TimDeve/hoquet@master")
+(load "git@github.com:TimDeve/hoquet@f9cf3ee3cf25025839d17ae2cfec2024263e292d")
 
 (load "config.carp")
 (load "secrets.carp")
