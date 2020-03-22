@@ -1,6 +1,6 @@
 (system-include "Arduino.h")
 
-(load "git@github.com:TimDeve/hoquet@f9cf3ee3cf25025839d17ae2cfec2024263e292d")
+(load "git@github.com:TimDeve/hoquet@v0.1.0")
 
 (load "config.carp")
 (load "secrets.carp")
@@ -22,13 +22,11 @@
      (Serial.println "--------------"))))
 
 (defn generate-html-hello []
-  (with Hoquet
-    (h "html"
-       {}
-       [(h "body"
-           {}
-           [(h "h1" {} [@"Hello from esp8266"])
-            (h "p" {} [@"Welcome to embedded Carp."])])])))
+  (with Elements
+    (html {}
+       [(body {}
+           [(h1 {} [@"Hello from esp8266"])
+            (p {} [@"Welcome to embedded Carp."])])])))
 
 (sig setup (Fn [] ()))
 (defn setup []
